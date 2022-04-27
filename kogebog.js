@@ -9,7 +9,7 @@ $(function() {
   $('#fallBackLink').hide();
   $('#about').show();
   $('#about').on('click', function() {
-    window.location = '../cooking/aboutTrinForTrin.html'
+    window.location = '../aboutTrinForTrin.html'
   });
 
 
