@@ -1,8 +1,8 @@
 # kogebog
 
-Kogebog med instruktioner i den rækkefølge maden skal laves i. 
+En PWA-kogebog med instruktioner i den rækkefølge maden skal laves i. 
 
-Målgruppen er autister og folk med ADHD, der kan have svært ved at overskue løsere formulerede opskrifter.
+Målgruppen er autister og folk med ADHD, der kan have svært ved at overskue løsere formulerede opskrifter, men kogebogen er også velegnet til begyndere udi kogekunsten.
 
 Mål og vægt er angivet for hvert skridt, så man ikke behøver at scrolle op til ingredienslisten.
 
