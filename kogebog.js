@@ -9,7 +9,7 @@ $(function() {
   $('#fallBackLink').hide();
   $('#about').show();
   $('#about').on('click', function() {
-    window.location = '../aboutTrinForTrin.html'
+    window.location = 'aboutTrinForTrin.html'
   });
 
 
@@ -38,6 +38,7 @@ $(function() {
       direction = 1;
     }
     $('body').css("font-size", fontSize);
+    $('.controlButton').css("font-size", fontSize);
   })
 
   $('p').on('click', function() {
