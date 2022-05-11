@@ -14,14 +14,14 @@ class Groensalat extends HTMLElement {
 
       <p><label><input type="checkbox"> 1-2 salatblade pr. person</label></p>
       <p><label><input type="checkbox"> 2-3 tomater</label></p>
-      <p><label><input type="checkbox"> (Feta i tern/oliven/hakkede
+      <p><label><input type="checkbox"> (Feta i tern/oliven/avocado i tern/hakkede
         cashewn&oslash;dder/t&oslash;rrede tomater/&hellip;)</label></p>
       <p><label><input type="checkbox"> (2 spsk olivenolie, 1 tsk eddike og et drys salt)</label></p>
 
     </div>
 
     <div class="insertedHowto"><b>Fremgangsm&aring;de:</b>
-      <p><label><input type="checkbox"> (Tag 2-3
+      <p><label><input type="checkbox"> Tag 2-3
       blade af et salathoved</label></p>
       <p><label><input type="checkbox"> Kasser slatne
       blade, og tag nye</label></p>
