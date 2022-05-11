@@ -2,6 +2,8 @@
 let TFTK_CACHE = 'TFTK-cache';
 let CACHED_URLS = [
   'components/rice.js', // Copy project path from EVERY entry to avoid mistakes
+  'components/emigrant.js',
+  'components/groensalat.js',
   'favicons/favicon-192.png', // Check that ALL files have an extension
   'favicons/maskable_192.png',
   'favicons/favicon-512.png',
