@@ -25,6 +25,10 @@ margin-top: 0px;
 font-style: normal;
 }
 
+button:hover {
+  border-style: inset;
+}
+
 li,u,p {
   font-size: 1em;
   font-style: normal;
@@ -84,10 +88,20 @@ input {
   padding: 7px;
 }
 
+button.kategori:hover {
+	background-color: rgb(126, 243, 255);
+  font-size: 1.05em;
+}
+
 .recipe, .insertedRecipe {
   background-color: rgb(205,248,255);
   border-radius: 5px;
   padding: 7px;}
+
+button.recipe:hover {
+	background-color: rgb(234, 255, 255);
+  font-size: 1.05em;
+}
 
 .ingredienser {
   background-color: rgb(223,244,244);
