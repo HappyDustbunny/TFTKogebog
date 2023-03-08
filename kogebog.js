@@ -1,28 +1,30 @@
 $(function() {
-  $('.opskrifter').hide();
-  $('.ingredienser').hide();
-  $('.howto').hide();
-  // Repeted recipes are treated differently: they do not unfold until explicitly clicked
-  $('.insertedIngredienser').hide();
-  $('.insertedHowto').hide();
-  // The a link is shown and the about button is hidden if no javascript is present
-  $('#fallBackLink').hide();
-  $('#about').show();
-  $('#about').on('click', function() {
-    window.location = 'aboutTrinForTrin.html'
-  });
+  if (!window.location.hash) {
+    $('.opskrifter').hide();
+    $('.ingredienser').hide();
+    $('.howto').hide();
+    // Repeted recipes are treated differently: they do not unfold until explicitly clicked
+    $('.insertedIngredienser').hide();
+    $('.insertedHowto').hide();
+    // The a link is shown and the about button is hidden if no javascript is present
+    $('#fallBackLink').hide();
+    $('#about').show();
+    $('#about').on('click', function() {
+      window.location = 'aboutTrinForTrin.html'
+    });
+    $(window).scrollTop(0)  // Helps resetting page so the top becomes the top
+  }
 
 
   $('#foldOutFoldIn').on('click', function() {
     if ($(this)[0].value == 'unfold') {
       showIndex();
     } else if ($(this)[0].value == 'unfoldAll') {
-      show();
+      showAll();
     }
     else {
-      hide();
+      hideAll();
     }
-
   });
 
 
@@ -41,6 +43,7 @@ $(function() {
     $('.controlButton').css("font-size", fontSize);
   })
 
+
   $('p').on('click', function() {
     if ($(this).children()[0]) {
       $(this).children()[0].checked = !$(this).children()[0].checked;
@@ -48,26 +51,30 @@ $(function() {
   });
 
 
-  function hide() {
-    $('.opskrifter').hide();
-    $('.ingredienser').hide();
-    $('.howto').hide();
-    $('.insertedIngredienser').hide();
-    $('.insertedHowto').hide();
+  $('.slut')[0].value = 'noSideDish'; // Initialise variable used for tracking if sidedishes are open
+
+
+  function hideAll() {
+    $('.opskrifter').hide(500);
+    $('.ingredienser').hide(500);
+    $('.howto').hide(500);
+    $('.insertedIngredienser').hide(500);
+    $('.insertedHowto').hide(500);
 
     $('#foldOutFoldIn')[0].value = 'unfold';
     $('#foldOutFoldIn')[0].textContent = 'Fold index ud';
+    $(window).scrollTop(0);  // Helps resetting page so the top becomes the top
   }
 
 
   function showIndex() {
-    $('.opskrifter').show();
+    $('.opskrifter').showAll();
     $('#foldOutFoldIn')[0].value = 'unfoldAll';
     $('#foldOutFoldIn')[0].textContent = 'Fold alt ud (for at kunne s\u00f8ge)';
   }
 
 
-  function show() {
+  function showAll() {
     $('.opskrifter').show();
     $('.ingredienser').show();
     $('.howto').show();
@@ -78,8 +85,13 @@ $(function() {
 
   // Fold everything
   $('.slut').on('click', function() {
+    if ( $('.slut')[0].value != 'noSideDish') { // If a sidedish is open it needs to be closed before toggling everything shut
+      $('#sideDish').remove();
+      $('.slut')[0].value = 'noSideDish';
+    }
     $('input').prop("checked", false);
-    hide();
+    hideAll();
+    window.location.hash = '';  //Used for linking to reciepes
   });
 
 
@@ -88,16 +100,62 @@ $(function() {
     $(this).next('.opskrifter').not('animated').slideToggle();
   });
 
+
   $('.opskrifter').on('click', '.recipe', function(event) {
     event.preventDefault();
-    $(this).next('.ingredienser').not('animated').slideToggle();
-    $(this).next('.ingredienser').next('.howto').not('animated').slideToggle();
+    $('#sideDish').remove(); // Close open side dishes
+    $('.insertedRecipe').css({'border-style': 'outset'}); // Fix side dish buttons
+    $('.ingredienser').hide(500); // Hide open recipes if any is open
+    $('.howto').hide(500);
+    $(this).next('.ingredienser').not('animated').show();  // Open current recipe
+    $(this).next('.ingredienser').next('.howto').not('animated').show();
+    $(this).next('div').children().not('animated').show();  // Open current recipe if used as side dish
   });
 
-  // Repeted recipes are only unfolded when clicked explicitly
-  $('.insertedRecipe').on('click', function(event) {
-    event.preventDefault();
-    $(this).next('.insertedIngredienser').not('animated').slideToggle();
-    $(this).next('.insertedIngredienser').next('.insertedHowto').not('animated').slideToggle();
+
+  $('.share').on('click', function(event) {
+    let subject = 'Link to recipe';
+    let body = 'Try this recipe: ' + window.location.href + '#' + $(this).parent().parent().prev()[0].id;
+    document.location = 'mailto:' + '?subject=' + subject + '&body=' + body;
   });
+
+
+    let sideDishes = {
+                      showBakedPotatoes: '#bakedPotatoes',
+                      showBakedSesamePotatoes: '#bakedSesamePotatoes',
+                      showButterCabbage: '#butterCabbage',
+                      showCarrotSalad: '#carrotSalad',
+                      showChappaties: '#chappaties',
+                      showGreenSalad: '#greenSalad',
+                      showHasselbachs: '#hasselbachs',
+                      showHomemadePasta: '#homemadePasta',
+                      showMashedPotatoes: '#mashedPotatoes',
+                      showPasta: '#pasta',
+                      showPita: '#pita',
+                      showRice: '#rice',
+                      showRootVegs: '#rootVegs',
+                      showSageRolls: '#sageRolls',
+                      showTrimitri: '#trimitri',
+                      showTortilla: '#tortilla'
+                    };
+
+
+  for (let sDish in sideDishes) {  // Puts eventlisteners on all side dish buttons
+    $('.' + sDish).on('click', function(event) {
+      $('#sideDish').remove();
+      $('.insertedRecipe').css({'border-style': 'outset'});
+      if ( $('.slut')[0].value == 'noSideDish' || !$(this).attr('class').includes($('.slut')[0].value)) {
+        let insertedRecipeHTML = $(sideDishes[sDish]).html().replace(/style="display: none;"/g, '');
+        insertedRecipeHTML = insertedRecipeHTML.replace('<button class="slut">(Slut)</button>', '');
+        insertedRecipeHTML = '<div id="sideDish">' + insertedRecipeHTML + '</div>';
+        $(this).css({'border-style': 'inset'});
+        $(this).after(insertedRecipeHTML);
+        $('.slut')[0].value = sDish;
+        $('#sideDish').hide();
+        $('#sideDish').slideDown();
+      } else {
+        $('.slut')[0].value = 'noSideDish';
+      }
+    });
+  };
 })
