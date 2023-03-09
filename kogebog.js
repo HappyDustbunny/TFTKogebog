@@ -68,7 +68,7 @@ $(function() {
 
 
   function showIndex() {
-    $('.opskrifter').showAll();
+    $('.opskrifter').show();
     $('#foldOutFoldIn')[0].value = 'unfoldAll';
     $('#foldOutFoldIn')[0].textContent = 'Fold alt ud (for at kunne s\u00f8ge)';
   }
@@ -115,7 +115,8 @@ $(function() {
 
   $('.share').on('click', function(event) {
     let subject = 'Link to recipe';
-    let body = 'Try this recipe: ' + window.location.href + '#' + $(this).parent().parent().prev()[0].id;
+    let message = 'Try this recipe: ' + window.location.href + '#' + $(this).parent().parent().prev()[0].id;
+    let body = message.replace('##', '#');
     document.location = 'mailto:' + '?subject=' + subject + '&body=' + body;
   });
 
@@ -128,6 +129,7 @@ $(function() {
                       showChappaties: '#chappaties',
                       showGreenSalad: '#greenSalad',
                       showHasselbachs: '#hasselbachs',
+                      showHazelCabbage: '#hazelCabbage',
                       showHomemadePasta: '#homemadePasta',
                       showMashedPotatoes: '#mashedPotatoes',
                       showPasta: '#pasta',
@@ -146,7 +148,8 @@ $(function() {
       $('.insertedRecipe').css({'border-style': 'outset'});
       if ( $('.slut')[0].value == 'noSideDish' || !$(this).attr('class').includes($('.slut')[0].value)) {
         let insertedRecipeHTML = $(sideDishes[sDish]).html().replace(/style="display: none;"/g, '');
-        insertedRecipeHTML = insertedRecipeHTML.replace('<button class="slut">(Slut)</button>', '');
+        insertedRecipeHTML = insertedRecipeHTML.replace('<button class="slut">(Slut)</button>', '');  // Remove buttons as there is no eventlistners attached and as they are more confusing than helping here
+        insertedRecipeHTML = insertedRecipeHTML.replace('<button class="share">Del</button>', '');
         insertedRecipeHTML = '<div id="sideDish">' + insertedRecipeHTML + '</div>';
         $(this).css({'border-style': 'inset'});
         $(this).after(insertedRecipeHTML);

@@ -59,6 +59,13 @@ input {
   width: auto;
 }
 
+.recipeHeading {
+  display: grid;
+  grid-template-columns: 12% auto 10% 2%;
+  grid-template-areas:
+  'emptyArea servesArea shareArea';
+}
+
 #about {
   display: none;
   width: max-content;
@@ -93,10 +100,16 @@ button.kategori:hover {
   font-size: 1.05em;
 }
 
-.recipe, .insertedRecipe {
+.recipe, .insertedRecipe, .share {
   background-color: rgb(205,248,255);
   border-radius: 5px;
   padding: 7px;}
+
+.share {
+  width: fit-content;
+  grid-area: shareArea;
+  font-size: 0.9em;
+}
 
 button.recipe:hover {
 	background-color: rgb(234, 255, 255);
@@ -141,7 +154,8 @@ button.recipe:hover {
 
 .antal {
   text-align: center;
-  margin-top: 2px;
+  /* margin-top: 2px; */
+  grid-area: servesArea;
 }
 
 .slut {
