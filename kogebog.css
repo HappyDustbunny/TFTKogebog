@@ -52,6 +52,11 @@ input {
   grid-template-columns: 33% 33% 33%;
 }
 
+.modal {
+  position: absolute;
+  z-index: 1000;
+}
+
 .controlButton {
   background-color: rgb(195,235,244);
   border-radius: 5px;

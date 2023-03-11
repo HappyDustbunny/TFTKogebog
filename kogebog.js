@@ -113,12 +113,17 @@ $(function() {
   });
 
 
-  $('.share').on('click', function(event) {
-    let subject = 'Link to recipe';
-    let message = 'Prøv denne opskrift: ' + window.location.href + '#' + $(this).parent().parent().prev()[0].id;
-    let body = message.replace('##', '#');
-    document.location = 'mailto:' + '?subject=' + subject + '&body=' + body;
-  });
+  // $('.share').on('click', function(event) {
+  //   let subject = 'Link to recipe';
+  //   let message = '';
+  //   if ($(this).parent().parent().prev()[0]) {
+  //     message = window.location.href + '#' + $(this).parent().parent().prev()[0].id;
+  //   } else {
+  //     message = window.location.href + '#' + $(this).parent().parent().parent().prev()[0].id;
+  //   }
+  //   let body = message.replace('##', '#');
+  //   document.location = 'mailto:' + '?subject=' + subject + '&body= Prøv denne opskrift: ' + body;
+  // });
 
 
     let sideDishes = {
