@@ -1,10 +1,9 @@
 
-let VERSION = 2.013; // Change version number to facilitate updates
+let VERSION = 2.014; // Change version number to facilitate updates
 let TFTK_CACHE = 'TFTK-cache';
 let CACHED_URLS = [
-  'components/rice.js', // Copy project path from EVERY entry to avoid mistakes
-  'components/emigrant.js',
-  'components/groensalat.js',
+  'components/modal-init.js', // Copy project path from EVERY entry to avoid mistakes
+  'components/modal-window.js',
   'favicons/favicon-192.png', // Check that ALL files have an extension
   'favicons/maskable_192.png',
   'favicons/favicon-512.png',
@@ -42,7 +41,7 @@ self.addEventListener('fetch', function(event) {
         return fetch(event.request);
       }
     }).catch(function(error) {
-      console.log('TFT Kogebog serviceWorker responded with error', error);
+      console.log('SBS Kogebog serviceWorker responded with error', error);
     })
   );
 })
