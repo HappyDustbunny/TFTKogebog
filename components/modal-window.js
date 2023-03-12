@@ -24,7 +24,7 @@ var  modal = (function() {
 
 
   $mailLinkButton.on('click', function() {
-    let subject = 'Link to recipe';
+    let subject = 'Link til opskrift';
     let linkText = $linkTextBox.val();
     document.location = 'mailto:' + '?subject=' + subject + '&body= Prøv denne opskrift: ' + linkText;
   })
