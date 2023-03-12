@@ -1,13 +1,34 @@
 var  modal = (function() {
   let $modal = $('<div class="modal"/>');
+  let $copyLinkDiv = $('<div class="copyLink">');
+  let $linkTextBox = $('<input id="linkTextBox" type="text">');
+  let $copyLinkButton = $('<button id="copyLinkButton" type="button" class="modalButton">&#10697;</button>');
+  let $mailLinkButton = $('<button id="mailLink" type="button" class="modalButton">Mail link</button>');
   let $content = $('<div class="modal-content"/>');
-  let $close = $('<button role="button" class="modal-close"> Close </button>');
+  let $close = $('<button id="closeButton" role="button" class="modalButton"> Close </button>');
 
-  $modal.append($content, $close);
+
+  $copyLinkDiv.append($linkTextBox, $copyLinkButton);
+  $modal.append($copyLinkDiv, $mailLinkButton, $content, $close);
+
   $close.on('click', function(event) {
     event.preventDefault();
     modal.close();
   });
+
+
+  $copyLinkButton.on('click', function(event) {
+    let linkText = $linkTextBox.val();
+    navigator.clipboard.writeText(linkText);
+  });
+
+
+  $mailLinkButton.on('click', function() {
+    let subject = 'Link to recipe';
+    let linkText = $linkTextBox.val();
+    document.location = 'mailto:' + '?subject=' + subject + '&body= Prøv denne opskrift: ' + linkText;
+  })
+
 
   return {
     center: function() {
@@ -25,18 +46,13 @@ var  modal = (function() {
       $modal.css({
         width: settings.width || 'auto',
         height: settings.height || 'auto',
-        backgroundColor: 'white'
+        backgroundColor: 'rgb(223,244,244)',
+        borderStyle: 'solid',
+        borderWidth: '3px',
+        borderColor: 'rgb(52, 207, 244)',
+        borderRadius: '15px',
+        padding: '12px'
       }).appendTo('body');
-
-      $close.css({
-        position: 'relative',
-          bottom: '-64px',
-          width: '57px',
-          left: '235px',
-          backgroundColor: 'rgb(205,248,255)',
-          borderRadius: '5px',
-          padding: '7px'
-      }).appendTo($modal);
 
       modal.center();
       $(window).on('resize', modal.center);

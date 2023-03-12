@@ -57,6 +57,24 @@ input {
   z-index: 1000;
 }
 
+.modalButton {
+  position: relative;
+  /*top: 60px;
+  left: 235px;*/
+  width: auto;
+  background-color: rgb(205,248,255);
+  border-radius: 5px;
+  padding: 7px;
+}
+
+#mailLink {
+  left: 30%;
+}
+
+#closeButton {
+  left: 80%;
+}
+
 .controlButton {
   background-color: rgb(195,235,244);
   border-radius: 5px;
