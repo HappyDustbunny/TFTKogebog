@@ -1,5 +1,5 @@
 
-let VERSION = 2.017; // Change version number to facilitate updates
+let VERSION = 2.018; // Change version number to facilitate updates
 let TFTK_CACHE = 'TFTK-cache';
 let CACHED_URLS = [
   'components/modal-init.js', // Copy project path from EVERY entry to avoid mistakes
