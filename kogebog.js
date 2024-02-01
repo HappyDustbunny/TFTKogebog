@@ -105,8 +105,8 @@ $(function() {
     event.preventDefault();
     $('#sideDish').remove(); // Close open side dishes
     $('.insertedRecipe').css({'border-style': 'outset'}); // Fix side dish buttons
-    $('.ingredienser').hide(500); // Hide open recipes if any is open
-    $('.howto').hide(500);
+    // $('.ingredienser').hide(500); // Hide open recipes if any is open
+    // $('.howto').hide(500);
     $(this).next('.ingredienser').not('animated').show();  // Open current recipe
     $(this).next('.ingredienser').next('.howto').not('animated').show();
     $(this).next('div').children().not('animated').show();  // Open current recipe if used as side dish
