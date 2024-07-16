@@ -6,22 +6,23 @@ import string
 # Name of the recipe
 # (4 personer) (Start 1(-3) timer før)
 #
-# Ingredienser
+# Ingredienser               Ikke Ingredienser:
 # ...
 # ...
 #
-# Fremgangsmåde
+# Fremgangsmåde               Ikke Fremgangsmåde:
 # ...
 # ...
 
 
 def main():
+    firstParenthsisFlag = False
     chunk = []
     all_text = []
-    my_file = os.path.join('.', 'recipe.txt')
+    my_file = os.path.join('./newRecipeFolder', 'recipe.txt')
 
     with open(my_file, encoding='utf8') as in_file, \
-            open("recipe_output_file.html", "a", encoding='utf8') as out_file:
+            open("newRecipeFolder/recipe_output_file.html", "a", encoding='utf8') as out_file:
         read_file = in_file.readlines()
 
         first_line = read_file[0]
@@ -39,23 +40,24 @@ def main():
         all_text.append('              <b>Ingredienser:</b>\n')
 
         for line in read_file:
-            if line:
-                line = re.sub('æ', '&aelig;', line, 50)
-                line = re.sub('ø', '&oslash;', line, 50)
-                line = re.sub('å', '&aring;', line, 50)
-                line = re.sub('Æ', '&AElig;', line, 50)
-                line = re.sub('Ø', '&Oslash;', line, 50)
-                line = re.sub('Å', '&Aring;', line, 50)
-                chunk.append(line)
-            if line[0] == '(' and line[-2] == ')':
+            if firstParenthsisFlag and line[0] == '(': # and line[-2] == ')':
                 chunk = []  # Done above
-            elif line.strip() == 'Fremgangsm&aring;de':
+                firstParenthsisFlag = True
+            elif line.strip() == 'Fremgangsmåde':
                 all_text = wrap_ingredients(chunk, all_text)
                 chunk = []
             elif line.strip() == 'Slut':
                 all_text = wrap_method(chunk, all_text)
 
+            chunk.append(line)
+
         for line in all_text:
+            line = re.sub('æ', '&aelig;', line, 50)
+            line = re.sub('ø', '&oslash;', line, 50)
+            line = re.sub('å', '&aring;', line, 50)
+            line = re.sub('Æ', '&AElig;', line, 50)
+            line = re.sub('Ø', '&Oslash;', line, 50)
+            line = re.sub('Å', '&Aring;', line, 50)
             out_file.writelines(line)
         
     print("Over and out")
@@ -65,27 +67,31 @@ def main():
 def wrap_ingredients(chunk, all_text):
     for line in chunk:
         if line.strip() == '':
-            all_text.append('\t<br>')
-        elif line.strip() == 'Fremgangsm&aring;de':
+            all_text.append('                  <br>\n')
+        elif line.strip()[0] == '(':
+            pass
+        elif line.strip() == 'Ingredienser':
+            pass
+        elif line.strip() == 'Fremgangsmåde':
             pass
         else:
-            all_text.append('\t<p><label><input type="checkbox"> ' + line.strip() + ' </label></p>\n')
+            all_text.append('                  <p><label><input type="checkbox"> ' + line.strip() + ' </label></p>\n')
 
-    all_text.append('</div>\n')
+    all_text.append('\n</div>')
     return all_text         
 
 
 def wrap_method(chunk, all_text):
     all_text.append('<div class="howto"> <b> Fremgangsm&aring;de: </b>\n')
     for line in chunk:
-        if line.strip() == 'Fremgangsm&aring;de:' or line == 'Slut':
+        if line.strip() == 'Fremgangsmåde' or line == 'Slut':
             pass
         elif line.strip() == '':
             all_text.append('\t<br>')
         else:
             all_text.append('\t<p><label><input type="checkbox">' + line.strip() + '</label></p>\n')
 
-    all_text.append('\t<button class="slut">(Slut)</button>')
+    all_text.append('\t<button class="slut">(Slut)</button>\n')
     all_text.append('</div>\n')
     return all_text
 
