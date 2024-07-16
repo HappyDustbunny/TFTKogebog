@@ -16,7 +16,7 @@ import string
 
 
 def main():
-    firstParenthsisFlag = False
+    firstParenthsisFlag = True
     chunk = []
     all_text = []
     my_file = os.path.join('./newRecipeFolder', 'recipe.txt')
@@ -40,16 +40,17 @@ def main():
         all_text.append('<b>Ingredienser:</b>\n')
 
         for line in read_file:
-            if firstParenthsisFlag and line[0] == '(': # and line[-2] == ')':
-                chunk = []  # Done above
-                firstParenthsisFlag = True
-            elif line.strip() == 'Fremgangsmåde':
+            if line.strip() == 'Fremgangsmåde':
                 all_text = wrap_ingredients(chunk, all_text)
                 chunk = []
             elif line.strip() == 'Slut':
                 all_text = wrap_method(chunk, all_text)
 
             chunk.append(line)
+            
+            if firstParenthsisFlag and line[0] == '(': # and line[-2] == ')':
+                chunk = []  # The two first line is handled above and therefore dropped
+                firstParenthsisFlag = False
 
         for line in all_text:
             line = re.sub('æ', '&aelig;', line, 50)
@@ -68,8 +69,8 @@ def wrap_ingredients(chunk, all_text):
     for line in chunk:
         if line.strip() == '':
             all_text.append('    <br>\n')
-        elif line.strip()[0] == '(':
-            pass
+        # elif line.strip()[0] == '(':
+        #     pass
         elif line.strip() == 'Ingredienser':
             pass
         elif line.strip() == 'Fremgangsmåde':
