@@ -25,19 +25,19 @@ def main():
             open("newRecipeFolder/recipe_output_file.html", "a", encoding='utf8') as out_file:
         read_file = in_file.readlines()
 
-        first_line = read_file[0]
+        first_line = read_file[0].strip()
         current_line = first_line.split()
-        all_text.append('              <button id="' + ''.join(n.capitalize() for n in current_line) + '" class="recipe">\n')
-        all_text.append('                  <h3>' + first_line.strip() + '</h3>\n')
-        all_text.append('              </button>\n')
+        all_text.append('<button id="' + ''.join(n.capitalize() for n in current_line) + '" class="recipe">\n')
+        all_text.append('    <h3>' + first_line + '</h3>\n')
+        all_text.append('</button>\n')
         
-        next_line = read_file[1]
-        all_text.append('              <div class="ingredienser">\n')
-        all_text.append('                  <div class="recipeHeading">\n')
-        all_text.append('                  <p class="antal">' + re.sub('ø', '&oslash;', next_line, 50) + '</p>\n')
-        all_text.append('                  <button class="share">Del</button>\n')
-        all_text.append('              </div>\n')
-        all_text.append('              <b>Ingredienser:</b>\n')
+        next_line = read_file[1].strip()
+        all_text.append('<div class="ingredienser">\n')
+        all_text.append('    <div class="recipeHeading">\n')
+        all_text.append('    <p class="antal">' + re.sub('ø', '&oslash;', next_line, 50) + '</p>\n')
+        all_text.append('    <button class="share">Del</button>\n')
+        all_text.append('</div>\n')
+        all_text.append('<b>Ingredienser:</b>\n')
 
         for line in read_file:
             if firstParenthsisFlag and line[0] == '(': # and line[-2] == ')':
@@ -67,7 +67,7 @@ def main():
 def wrap_ingredients(chunk, all_text):
     for line in chunk:
         if line.strip() == '':
-            all_text.append('                  <br>\n')
+            all_text.append('    <br>\n')
         elif line.strip()[0] == '(':
             pass
         elif line.strip() == 'Ingredienser':
@@ -75,19 +75,19 @@ def wrap_ingredients(chunk, all_text):
         elif line.strip() == 'Fremgangsmåde':
             pass
         else:
-            all_text.append('                  <p><label><input type="checkbox"> ' + line.strip() + ' </label></p>\n')
+            all_text.append('    <p><label><input type="checkbox"> ' + line.strip() + ' </label></p>\n')
 
-    all_text.append('\n</div>')
+    all_text.append('</div>\n\n')
     return all_text         
 
 
 def wrap_method(chunk, all_text):
-    all_text.append('<div class="howto"> <b> Fremgangsm&aring;de: </b>\n')
+    all_text.append('<div class="howto"> \n\t<b> Fremgangsm&aring;de: </b>\n')
     for line in chunk:
         if line.strip() == 'Fremgangsmåde' or line == 'Slut':
             pass
         elif line.strip() == '':
-            all_text.append('\t<br>')
+            all_text.append('\t<br>\n')
         else:
             all_text.append('\t<p><label><input type="checkbox">' + line.strip() + '</label></p>\n')
 
