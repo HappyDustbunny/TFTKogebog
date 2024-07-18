@@ -117,6 +117,7 @@ $(function() {
                       showBakedPotatoes: '#bakedPotatoes',
                       showBakedSesamePotatoes: '#bakedSesamePotatoes',
                       showButterCabbage: '#butterCabbage',
+                      showBurgerBuns: '#burgerBuns',
                       showCarrotSalad: '#carrotSalad',
                       showChappaties: '#chappaties',
                       showGreenSalad: '#greenSalad',
